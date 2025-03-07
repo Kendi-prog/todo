@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 import { auth, googleSignIn } from "../../../utils/firebase";
@@ -21,7 +21,7 @@ import {
 
 
 const SignInForm = () => {
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
     const [rememberMe, setRememberMe] = useState(false);
 
     const initialValues = {
@@ -38,7 +38,6 @@ const SignInForm = () => {
         const user = await providerFunction();
         if(user) {
             alert("Sign In Successful");
-            navigate("/todo");
         }
     }
 
@@ -54,7 +53,6 @@ const SignInForm = () => {
             }
 
             alert("Sign In Successful");
-            navigate("/todo");
             resetForm();
         } catch (error) {
             console.error("Login Error:", error); // Logs the error for debugging
