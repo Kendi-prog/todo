@@ -9,7 +9,7 @@ import {
     CalendarContainer 
 } from "./task-management.styles";
 import Calendar from "../calendar/calendar.component";
-import task2 from "../../assets/task2.jpeg";
+import task2 from "../../../assets/task2.jpeg";
 
 const TaskManagement = ({ tasks, onDelete, onUpdate, onToggleComplete, editingTask, setEditingTask }
     ) => {
