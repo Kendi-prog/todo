@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { createUserWithEmailAndPassword } from "firebase/auth"; 
 import { doc, setDoc } from "firebase/firestore";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import { auth, db, googleSignIn } from "../../../utils/firebase";
 import { 
@@ -15,10 +16,16 @@ import {
     HorizontalLineContainer,
     GoogleIcon,
     ErrorMessageContainer,
+    PasswordContainer,
+    EyeIcon,
 } from "./sign-up-form.styles";
+
+
 
 const SignUpForm = () => {
     const navigate = useNavigate();
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
     const initialValues = {
         username: "",
@@ -130,14 +137,24 @@ const SignUpForm = () => {
                             <StyledField type="email" name="email" placeholder="Email" />
                             <ErrorMessageContainer name="email" component="div" />
                         </div>
-                        <div>
-                            <StyledField type="password" name="password" placeholder="Password" />
+                        <PasswordContainer>
+                            <StyledField type={showPassword ? "text" : "password"} name="password" placeholder="Password" />
+                            <EyeIcon 
+                                onClick={() => setShowPassword((prev) => !prev)} 
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </EyeIcon>
                             <ErrorMessageContainer name="password" component="div" />
-                        </div>
-                        <div>
-                            <StyledField type="password" name="confirmPassword" placeholder="Confirm Password" />
+                        </PasswordContainer>
+                        <PasswordContainer>
+                            <StyledField type={showConfirmPassword ? "text" : "password"} name="confirmPassword" placeholder="Confirm Password" />
+                            <EyeIcon 
+                                onClick={() => setShowConfirmPassword((prev) => !prev)} 
+                            >
+                                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+                            </EyeIcon>
                             <ErrorMessageContainer name="confirmPassword" component="div" />
-                        </div>
+                        </PasswordContainer>
 
                         <SubmitButton type="submit" disabled={isSubmitting}>
                             {isSubmitting ? "Signing up ..." : "Sign Up"}
