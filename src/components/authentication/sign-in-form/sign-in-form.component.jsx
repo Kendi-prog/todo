@@ -4,6 +4,7 @@ import * as Yup from "yup";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 import { auth, googleSignIn } from "../../../utils/firebase";
 import { 
@@ -16,6 +17,8 @@ import {
      RememberMe,
      RememberMeInput,
      ErrorMessageContainer,
+     PasswordContainer,
+     EyeIcon
 
 } from "./sign-in-form.styles";
 
@@ -23,6 +26,7 @@ import {
 const SignInForm = () => {
     const navigate = useNavigate();
     const [rememberMe, setRememberMe] = useState(false);
+    const[showPassword, setShowPassword] = useState(false);
 
     const initialValues = {
         email: "",
@@ -85,10 +89,15 @@ const SignInForm = () => {
                             <StyledField type="email" name="email" placeholder="Email" />
                             <ErrorMessageContainer name="email" component="div"/>
                         </div>
-                        <div>
-                            <StyledField type="password" name="password" placeholder="Password" />
+                        <PasswordContainer>
+                            <StyledField type={showPassword ? "text" : "password"} name="password" placeholder="Password" />
+                            <EyeIcon 
+                                onClick={() => setShowPassword((prev) => !prev)} 
+                            >
+                                {showPassword ? <FaEyeSlash /> : <FaEye />}
+                            </EyeIcon>
                             <ErrorMessageContainer name="password" component="div"/>
-                        </div>
+                        </PasswordContainer>
                         <RememberMe>
                             <label>
                                 <RememberMeInput 

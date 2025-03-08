@@ -34,6 +34,29 @@ export const StyledField = styled(Field)`
   }
 `;
 
+
+export const PasswordContainer = styled.div`
+    position: relative;
+    width: 100%;
+`;
+
+export const EyeIcon = styled.span`
+    position: absolute;
+    right: 5px;
+    top: 60%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 18px;
+    color: #888;
+    transition: color 0.3s;
+    // z-index: -5;  
+
+    &:hover {
+        color: #333;
+    }
+`;
+
+
 export const ErrorMessageContainer = styled(ErrorMessage)`
   font-size: 13px;
   color: rgb(134, 9, 9);
