@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { signInWithEmailAndPassword } from "firebase/auth";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 
 import { auth, googleSignIn } from "../../../utils/firebase";
@@ -21,7 +21,7 @@ import {
 
 
 const SignInForm = () => {
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
     const [rememberMe, setRememberMe] = useState(false);
 
     const initialValues = {
@@ -39,9 +39,10 @@ const SignInForm = () => {
         if(user) {
             alert("Sign In Successful");
         }
+        navigate("/todo");
     }
 
-    const handleSubmit = async (values, { setSubmitting, setErrorMessageContainer, resetForm }) => {
+    const handleSubmit = async (values, { setSubmitting, setErrors, resetForm }) => {
         try {
             const userCredential = await signInWithEmailAndPassword(
                 auth, values.email, values.password
@@ -54,10 +55,18 @@ const SignInForm = () => {
 
             alert("Sign In Successful");
             resetForm();
+            navigate("/todo");
+
         } catch (error) {
             console.error("Login Error:", error); // Logs the error for debugging
-            setErrorMessageContainer({ email: "Incorrect email or password" });
+
+            setErrors({ email: "Incorrect email or password" });
+
+            alert("Incorrect email or password!");
+
+            resetForm({ values: { email: "", password: "" } });
         }
+
         
         setSubmitting(false);
     }
@@ -70,7 +79,7 @@ const SignInForm = () => {
                 validationSchema={validationSchema}
                 onSubmit={handleSubmit}
             >
-                {({ isSubmitting}) => (
+                {({ isSubmitting }) => (
                     <Form>
                         <div>
                             <StyledField type="email" name="email" placeholder="Email" />

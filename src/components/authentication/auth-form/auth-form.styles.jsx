@@ -5,13 +5,14 @@ export const Container = styled.div`
   align-items: center;
   justify-content: center;
   height: 100vh;
+  width: 100vw;
   background: #F7F3FA;
   overflow: hidden;
 `;
 
 export const Wrapper = styled.div`
   display: flex;
-  width: 800px;
+  width: 700px;
   height: 500px;
   border-radius: 10px;
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);

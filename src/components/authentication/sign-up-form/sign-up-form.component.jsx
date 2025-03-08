@@ -1,5 +1,5 @@
 import React from "react";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import { createUserWithEmailAndPassword } from "firebase/auth"; 
@@ -18,7 +18,7 @@ import {
 } from "./sign-up-form.styles";
 
 const SignUpForm = () => {
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     const initialValues = {
         username: "",
@@ -61,9 +61,11 @@ const SignUpForm = () => {
             alert("Account created successfully");
            
         }
+
+        navigate("/todo");
     };
 
-    const handleSubmit = async (values, { setSubmitting, setErrorMessage }) => {
+    const handleSubmit = async (values, { setSubmitting, resetForm }) => {
         try {
             //creating the user in firebase authentication
             const userCredential = await createUserWithEmailAndPassword(auth, values.email, values.password);
@@ -77,10 +79,25 @@ const SignUpForm = () => {
             });
 
             alert("Account created successfully");
-           
+
+            resetForm();
+
+            navigate("/todo");
+
         } catch (error) {
-            console.error("Sign up error", error);
-            setErrorMessage({ email: "Email already in use"});
+            // console.error("Sign up error", error);
+            // setFieldError({ email: "Email already in use"});
+            // alert("Failed creating account, try again!");
+
+             // Map Firebase error messages to a user-friendly format
+            if (error.code === "auth/email-already-in-use") {
+                alert("This email is already in use. Try another one.");
+            } else if (error.code === "auth/weak-password") {
+                alert("Password should be at least 6 characters."); 
+            } else if (error.code === "auth/invalid-email") {
+                alert("Invalid email address format.");
+            }
+    
         }
         setSubmitting(false);
     };
@@ -121,6 +138,7 @@ const SignUpForm = () => {
                             <StyledField type="password" name="confirmPassword" placeholder="Confirm Password" />
                             <ErrorMessageContainer name="confirmPassword" component="div" />
                         </div>
+
                         <SubmitButton type="submit" disabled={isSubmitting}>
                             {isSubmitting ? "Signing up ..." : "Sign Up"}
                         </SubmitButton>

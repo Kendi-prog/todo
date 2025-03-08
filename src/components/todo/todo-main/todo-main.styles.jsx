@@ -18,6 +18,7 @@ export const TaskInputArea = styled.div`
 export const TaskListArea = styled.div`
     flex: 2; 
     padding: 10px 50px;
+    // padding: 20px;
     background-color: #F7F3FA; 
     overflow-y: auto;
     height: 100vh;
