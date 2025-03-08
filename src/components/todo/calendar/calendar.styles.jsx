@@ -16,7 +16,7 @@ export const DatesContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+    width: 120%;
 `;
 
 export const Arrow = styled.div`
